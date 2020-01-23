@@ -14,10 +14,10 @@ driver = webdriver.Chrome()
 def scrape_info(q):
 	driver.get('https://www.google.com/search?q='+q)
 	try:
-        link = driver.find_element_by_xpath('//a[text()="Change to English"]').get_attribute('href')
-        driver.get(link)
-    except:
-        pass
+		link = driver.find_element_by_xpath('//a[text()="Change to English"]').get_attribute('href')
+		driver.get(link)
+	except:
+		pass
 	rating = ''
 	address = ''
 	daily_hours = []
