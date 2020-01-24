@@ -8,7 +8,7 @@ filename = sys.argv[1]
 
 df = pd.read_excel(filename)
 days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-
+months = {'Jan': '1','Feb': '2','Mar': '3','Apr': '4','May': '5','June': '6','July': '7','Aug': '8','Sep': '9','Oct': '10','Nov': '11', 'Dec': '12'}
 driver = webdriver.Chrome()
 
 def scrape_info(q):
@@ -96,13 +96,16 @@ def scrape_info(q):
 			data['name'] = q
 			try:
 				if len(event.get_attribute('innerText').strip().split('\n')) == 3:
-					data['date'] = event.get_attribute('innerText').split('\n')[0]
+					day_date = event.get_attribute('innerText').split('\n')[0]
+					data['day'] = day_date.split(',')[0]
+					data['date'] = day_date.split(',')[1].strip().split(' ')[0].strip() + '/' + months[day_date.split(',')[1].strip().split(' ')[1].strip()] + '/2020' 
 					data['time'] = event.get_attribute('innerText').split('\n')[1]
 					data['event name'] = event.get_attribute('innerText').split('\n')[2]
 				else:
-					data['date'] = event.get_attribute('innerText').split('\n')[0]
+					day_date = event.get_attribute('innerText').split('\n')[0]
+					data['day'] = day_date.split(',')[0]
+					data['date'] = day_date.split(',')[1].strip().split(' ')[0].strip() + '/' + months[day_date.split(',')[1].strip().split(' ')[1].strip()] + '/2020'  
 					data['event name'] = event.get_attribute('innerText').split('\n')[1]
-				events_list.append(data) 
 			except:
 				pass
 			events_list.append(data)
